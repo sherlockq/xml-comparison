@@ -20,7 +20,7 @@ test {
 ext {
     junitVersion = '5.5.0'
     mockitoVersion = '3.0.0'
-    assertjVersion = '3.11.1'
+    assertjVersion = '3.15.0'
 }
 
 dependencies {
