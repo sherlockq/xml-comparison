@@ -152,13 +152,11 @@ class XmlComparatorFeatures {
     }
 
     Diff generateCcdaDiff(Input.Builder control, Input.Builder test) {
-        ElementSelector templateIdSelector = ElementSelectors.byXPath("./templateId", ElementSelectors.byNameAndAllAttributes);
         ElementSelector componentTemplateIdSelector = ElementSelectors.byXPath("./section/templateId", ElementSelectors.byNameAndAllAttributes);
         ElementSelector elementSelector = ElementSelectors.conditionalBuilder()
-                .whenElementIsNamed("section").thenUse(templateIdSelector)
                 .whenElementIsNamed("component").thenUse(componentTemplateIdSelector)
-                .whenElementIsNamed("ClinicalDocument").thenUse(ElementSelectors.byName)
-                .elseUse(ElementSelectors.byNameAndAllAttributes)
+                .whenElementIsNamed("templateId").thenUse(ElementSelectors.byNameAndAllAttributes)
+                .elseUse(ElementSelectors.byName)
                 .build();
 
         return DiffBuilder.compare(control).withTest(test)
