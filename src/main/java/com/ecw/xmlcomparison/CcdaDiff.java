@@ -11,7 +11,7 @@ public class CcdaDiff {
     public CcdaDiff() {
     }
 
-    Diff generateCcdaDiff(Input.Builder control, Input.Builder test) {
+    Diff compare(Input.Builder control, Input.Builder test) {
         ElementSelector componentTemplateIdSelector = ElementSelectors.byXPath("./section/templateId", ElementSelectors.byNameAndAllAttributes);
         ElementSelector elementSelector = ElementSelectors.conditionalBuilder()
                 .whenElementIsNamed("component").thenUse(componentTemplateIdSelector)
