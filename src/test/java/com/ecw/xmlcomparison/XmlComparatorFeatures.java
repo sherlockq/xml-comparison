@@ -2,7 +2,6 @@ package com.ecw.xmlcomparison;
 
 import org.junit.jupiter.api.Test;
 import org.xmlunit.assertj.XmlAssert;
-import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.builder.Input;
 import org.xmlunit.diff.*;
 
@@ -10,10 +9,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class XmlComparatorFeatures {
 
+    private final CcdaDiff ccdaDiff = new CcdaDiff();
+
     @Test
     void compareTwoFiles() {
 
-        Diff diff = generateCcdaDiff(Input.fromURL(XmlComparatorFeatures.class.getResource("/sample-1.xml"))
+        Diff diff = ccdaDiff.generateCcdaDiff(Input.fromURL(XmlComparatorFeatures.class.getResource("/sample-1.xml"))
                 , Input.fromURL(XmlComparatorFeatures.class.getResource("/sample-2.xml")));
 
         for (Difference difference : diff.getDifferences()) {
@@ -36,7 +37,7 @@ class XmlComparatorFeatures {
         //language=XML
         String swapped = "<typeId root=\"2.16.840.1.113883.1.3\" extension=\"POCD_HD000040\"/>";
 
-        Diff diff = generateCcdaDiff(Input.fromString(original), Input.fromString(swapped));
+        Diff diff = ccdaDiff.generateCcdaDiff(Input.fromString(original), Input.fromString(swapped));
         assertThat(diff.hasDifferences()).as(diff.toString()).isFalse();
     }
 
@@ -54,7 +55,7 @@ class XmlComparatorFeatures {
                 "<templateId root=\"2.16.840.1.113883.10.20.22.1.2\" extension=\"2015-08-01\"/>\n" +
                 "</root>";
 
-        Diff diff = generateCcdaDiff(Input.fromString(original), Input.fromString(swapped));
+        Diff diff = ccdaDiff.generateCcdaDiff(Input.fromString(original), Input.fromString(swapped));
         assertThat(diff.hasDifferences()).as(diff.toString()).isFalse();
     }
 
@@ -78,7 +79,7 @@ class XmlComparatorFeatures {
                 "<postalCode>97867</postalCode>\n" +
                 "</addr>";
 
-        Diff diff = generateCcdaDiff(Input.fromString(original), Input.fromString(swapped));
+        Diff diff = ccdaDiff.generateCcdaDiff(Input.fromString(original), Input.fromString(swapped));
         assertThat(diff.hasDifferences()).as(diff.toString()).isFalse();
     }
 
@@ -126,7 +127,7 @@ class XmlComparatorFeatures {
                         "    </component>\n" +
                         "</structuredBody>";
 
-        Diff diff = generateCcdaDiff(Input.fromString(original), Input.fromString(swapped));
+        Diff diff = ccdaDiff.generateCcdaDiff(Input.fromString(original), Input.fromString(swapped));
         assertThat(diff.hasDifferences()).as(diff.toString()).isFalse();
     }
 
@@ -147,24 +148,7 @@ class XmlComparatorFeatures {
                 "    </section>\n" +
                 "</parent>";
 
-        Diff diff = generateCcdaDiff(Input.fromString(original), Input.fromString(swapped));
+        Diff diff = ccdaDiff.generateCcdaDiff(Input.fromString(original), Input.fromString(swapped));
         assertThat(diff.hasDifferences()).as(diff.toString()).isFalse();
-    }
-
-    Diff generateCcdaDiff(Input.Builder control, Input.Builder test) {
-        ElementSelector componentTemplateIdSelector = ElementSelectors.byXPath("./section/templateId", ElementSelectors.byNameAndAllAttributes);
-        ElementSelector elementSelector = ElementSelectors.conditionalBuilder()
-                .whenElementIsNamed("component").thenUse(componentTemplateIdSelector)
-                .whenElementIsNamed("templateId").thenUse(ElementSelectors.byNameAndAllAttributes)
-                .elseUse(ElementSelectors.byName)
-                .build();
-
-        return DiffBuilder.compare(control).withTest(test)
-                .ignoreComments()
-                .ignoreWhitespace()
-                .withNodeMatcher(new DefaultNodeMatcher(elementSelector))
-                // difference in child order is considered a similarity
-                .checkForSimilar()
-                .build();
     }
 }
