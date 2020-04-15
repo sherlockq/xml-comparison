@@ -4,10 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.xmlunit.assertj.XmlAssert;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.builder.Input;
-import org.xmlunit.diff.DefaultNodeMatcher;
-import org.xmlunit.diff.Diff;
-import org.xmlunit.diff.Difference;
-import org.xmlunit.diff.ElementSelectors;
+import org.xmlunit.diff.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -201,4 +198,36 @@ class XmlComparatorFeatures {
                 .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byXPath(".//templateId", ElementSelectors.byNameAndAllAttributes)))
                 .areIdentical();
     }
+    
+    @Test
+    void documents_considered_identical_with_different_order_of_nested_id_tags() {
+        //language=XML
+        String original = "<parent>\n" +
+                "    <section>\n" +
+                "        <templateId root=\"child1\"/>\n" +
+                "    </section>\n" +
+                "    <templateId root=\"parent1\"/>\n" +
+                "</parent>";
+        //language=XML
+        String swapped = "<parent>\n" +
+                "    <templateId root=\"parent1\"/>\n" +
+                "    <section>\n" +
+                "        <templateId root=\"child1\"/>\n" +
+                "    </section>\n" +
+                "</parent>";
+
+        ElementSelector elementSelector = ElementSelectors.conditionalBuilder()
+                .whenElementIsNamed("section").thenUse(ElementSelectors.byXPath("./templateId", ElementSelectors.byNameAndAllAttributes))
+                .elseUse(ElementSelectors.byNameAndAllAttributes)
+                .build();
+
+//        assertThat(diff.isIdentical())
+        XmlAssert.assertThat(original).and(swapped)
+                .ignoreComments()
+                .ignoreWhitespace()
+                .ignoreChildNodesOrder()
+                .withNodeMatcher(new DefaultNodeMatcher(elementSelector))
+                .areIdentical();
+    }
+
 }
