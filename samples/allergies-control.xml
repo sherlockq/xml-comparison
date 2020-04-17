@@ -1,0 +1,206 @@
+<component xmlns:xsi="urn:hl7-org:v3">
+    <section>
+        <templateId root="2.16.840.1.113883.10.20.22.2.6"/>
+        <templateId root="2.16.840.1.113883.10.20.22.2.6.1"/>
+        <templateId root="2.16.840.1.113883.10.20.22.2.6" extension="2015-08-01"/>
+        <templateId root="2.16.840.1.113883.10.20.22.2.6.1" extension="2015-08-01"/>
+        <code
+                code="48765-2"
+                codeSystem="2.16.840.1.113883.6.1"
+                codeSystemName="LOINC"
+                displayName="Allergies, adverse reactions, alerts"/>
+        <title>ALLERGIES</title>
+        <text>
+            <table border="1" width="100%">
+                <thead>
+                    <tr>
+                        <th>Allergen (clinical drug ingredient)</th>
+                        <th>Drug/Non Drug Allergy documented on EMR</th>
+                        <th>Reaction</th>
+                        <th>Allergy Type</th>
+                        <th>Onset Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td ID="allergy2">Cephalexin</td>
+                        <td>Keflex(NDC Code:58463-0011-01)</td>
+                        <td ID="reaction2">diarrhea</td>
+                        <td>Drug Allergy</td>
+                        <td/>
+                        <td>Inactive</td>
+                    </tr>
+                    <tr>
+                        <td ID="allergy1">Ibuprofen</td>
+                        <td>Ibuprofen(NDC Code:00363-0291-08)</td>
+                        <td ID="reaction1">stomach upset</td>
+                        <td>Drug Allergy</td>
+                        <td>04/08/1998</td>
+                        <td>Active</td>
+                    </tr>
+                </tbody>
+            </table>
+        </text>
+        <entry typeCode="DRIV">
+            <act classCode="ACT" moodCode="EVN">
+                <templateId root="2.16.840.1.113883.10.20.22.4.30"/>
+                <templateId root="2.16.840.1.113883.10.20.22.4.30" extension="2015-08-01"/>
+                <id root="2.16.840.1.113883.4.391" extension="bd7e16eb-bc7c-449c-acf1-05fa5b381cd6"/>
+                <code code="CONC" codeSystem="2.16.840.1.113883.5.6"/>
+                <statusCode code="active"/>
+                <effectiveTime>
+                    <low nullFlavor="UNK"/>
+                </effectiveTime>
+                <entryRelationship typeCode="SUBJ" inversionInd="false">
+                    <observation classCode="OBS" moodCode="EVN">
+                        <templateId root="2.16.840.1.113883.10.20.22.4.7"/>
+                        <templateId root="2.16.840.1.113883.10.20.22.4.7" extension="2014-06-09"/>
+                        <id root="2.16.840.1.113883.4.391.313855.3" extension="52959-0660-20"/>
+                        <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
+                        <statusCode code="completed"/>
+                        <effectiveTime>
+                            <low nullFlavor="NI"/>
+                        </effectiveTime>
+                        <value
+                                xsi:type="CD"
+                                code="416098002"
+                                codeSystem="2.16.840.1.113883.6.96"
+                                codeSystemName="SNOMED CT"
+                                displayName="Drug allergy">
+                            <originalText>
+                                <reference value="#allergy2"/>
+                            </originalText>
+                        </value>
+                        <participant typeCode="CSM">
+                            <participantRole classCode="MANU">
+                                <playingEntity classCode="MMAT">
+                                    <code
+                                            code="2231"
+                                            codeSystem="2.16.840.1.113883.6.88"
+                                            codeSystemName="RXNORM"
+                                            displayName="Cephalexin">
+                                        <originalText>
+                                            <reference value="#allergy2"/>
+                                        </originalText>
+                                    </code>
+                                    <name>Keflex</name>
+                                </playingEntity>
+                            </participantRole>
+                        </participant>
+                        <entryRelationship typeCode="MFST" inversionInd="true">
+                            <observation classCode="OBS" moodCode="EVN">
+                                <templateId root="2.16.840.1.113883.10.20.22.4.9"/>
+                                <templateId root="2.16.840.1.113883.10.20.22.4.9" extension="2014-06-09"/>
+                                <id root="2.16.840.1.113883.4.391" extension="aaab9402-f143-457f-a444-52e505efc53a"/>
+                                <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
+                                <text>
+                                    <reference value="#reaction2"/>
+                                </text>
+                                <statusCode code="completed"/>
+                                <value xsi:type="CD" nullFlavor="UNK"/>
+                            </observation>
+                        </entryRelationship>
+                        <entryRelationship typeCode="SUBJ" inversionInd="true">
+                            <observation classCode="OBS" moodCode="EVN">
+                                <templateId root="2.16.840.1.113883.10.20.22.4.28"/>
+                                <code
+                                        code="33999-4"
+                                        codeSystem="2.16.840.1.113883.6.1"
+                                        codeSystemName="LOINC"
+                                        displayName="Status"/>
+                                <statusCode code="completed"/>
+                                <value
+                                        xsi:type="CE"
+                                        code="73425007"
+                                        codeSystem="2.16.840.1.113883.6.96"
+                                        codeSystemName="SNOMED CT"
+                                        displayName="Inactive"/>
+                            </observation>
+                        </entryRelationship>
+                    </observation>
+                </entryRelationship>
+            </act>
+        </entry>
+        <entry typeCode="DRIV">
+            <act classCode="ACT" moodCode="EVN">
+                <templateId root="2.16.840.1.113883.10.20.22.4.30"/>
+                <templateId root="2.16.840.1.113883.10.20.22.4.30" extension="2015-08-01"/>
+                <id root="2.16.840.1.113883.4.391" extension="b1fc180a-ff78-4138-8fda-9fe0b6bb7c72"/>
+                <code code="CONC" codeSystem="2.16.840.1.113883.5.6"/>
+                <statusCode code="active"/>
+                <effectiveTime>
+                    <low nullFlavor="UNK"/>
+                </effectiveTime>
+                <entryRelationship typeCode="SUBJ" inversionInd="false">
+                    <observation classCode="OBS" moodCode="EVN">
+                        <templateId root="2.16.840.1.113883.10.20.22.4.7"/>
+                        <templateId root="2.16.840.1.113883.10.20.22.4.7" extension="2014-06-09"/>
+                        <id root="2.16.840.1.113883.4.391.313855.2" extension="00113-0074-71"/>
+                        <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
+                        <statusCode code="completed"/>
+                        <effectiveTime>
+                            <low value="19980408"/>
+                        </effectiveTime>
+                        <value
+                                xsi:type="CD"
+                                code="416098002"
+                                codeSystem="2.16.840.1.113883.6.96"
+                                codeSystemName="SNOMED CT"
+                                displayName="Drug allergy">
+                            <originalText>
+                                <reference value="#allergy1"/>
+                            </originalText>
+                        </value>
+                        <participant typeCode="CSM">
+                            <participantRole classCode="MANU">
+                                <playingEntity classCode="MMAT">
+                                    <code
+                                            code="5640"
+                                            codeSystem="2.16.840.1.113883.6.88"
+                                            codeSystemName="RXNORM"
+                                            displayName="Ibuprofen">
+                                        <originalText>
+                                            <reference value="#allergy1"/>
+                                        </originalText>
+                                    </code>
+                                    <name>Ibuprofen</name>
+                                </playingEntity>
+                            </participantRole>
+                        </participant>
+                        <entryRelationship typeCode="MFST" inversionInd="true">
+                            <observation classCode="OBS" moodCode="EVN">
+                                <templateId root="2.16.840.1.113883.10.20.22.4.9"/>
+                                <templateId root="2.16.840.1.113883.10.20.22.4.9" extension="2014-06-09"/>
+                                <id root="2.16.840.1.113883.4.391" extension="73d7d466-1716-41ae-9746-fcb74396cd28"/>
+                                <code code="ASSERTION" codeSystem="2.16.840.1.113883.5.4"/>
+                                <text>
+                                    <reference value="#reaction1"/>
+                                </text>
+                                <statusCode code="completed"/>
+                                <value xsi:type="CD" nullFlavor="UNK"/>
+                            </observation>
+                        </entryRelationship>
+                        <entryRelationship typeCode="SUBJ" inversionInd="true">
+                            <observation classCode="OBS" moodCode="EVN">
+                                <templateId root="2.16.840.1.113883.10.20.22.4.28"/>
+                                <code
+                                        code="33999-4"
+                                        codeSystem="2.16.840.1.113883.6.1"
+                                        codeSystemName="LOINC"
+                                        displayName="Status"/>
+                                <statusCode code="completed"/>
+                                <value
+                                        xsi:type="CE"
+                                        code="55561003"
+                                        codeSystem="2.16.840.1.113883.6.96"
+                                        codeSystemName="SNOMED CT"
+                                        displayName="Active"/>
+                            </observation>
+                        </entryRelationship>
+                    </observation>
+                </entryRelationship>
+            </act>
+        </entry>
+    </section>
+</component>

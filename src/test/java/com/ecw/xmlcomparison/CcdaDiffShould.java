@@ -7,15 +7,13 @@ import org.xmlunit.diff.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class XmlComparatorFeatures {
-
-    private final CcdaDiff ccdaDiff = new CcdaDiff();
+class CcdaDiffShould {
 
     @Test
     void compareTwoFiles() {
 
-        Diff diff = ccdaDiff.compare(Input.fromURL(XmlComparatorFeatures.class.getResource("/sample-1.xml"))
-                , Input.fromURL(XmlComparatorFeatures.class.getResource("/sample-2.xml")));
+        Diff diff = CcdaDiff.of(Input.fromURL(CcdaDiffShould.class.getResource("/sample-1.xml"))
+                , Input.fromURL(CcdaDiffShould.class.getResource("/sample-2.xml"))).getDiff();
 
         for (Difference difference : diff.getDifferences()) {
             System.out.println(difference.toString());
@@ -25,19 +23,13 @@ class XmlComparatorFeatures {
     }
 
     @Test
-    void documents_considered_not_identical() {
-        XmlAssert.assertThat(Input.fromURL(XmlComparatorFeatures.class.getResource("/sample-1.xml")))
-                .and(Input.fromURL(XmlComparatorFeatures.class.getResource("/sample-2.xml"))).areNotIdentical();
-    }
-
-    @Test
     void documents_considered_identical_with_different_attribute_order() {
         //language=XML
         String original = "<typeId extension=\"POCD_HD000040\" root=\"2.16.840.1.113883.1.3\"/>";
         //language=XML
         String swapped = "<typeId root=\"2.16.840.1.113883.1.3\" extension=\"POCD_HD000040\"/>";
 
-        Diff diff = ccdaDiff.compare(Input.fromString(original), Input.fromString(swapped));
+        Diff diff = CcdaDiff.of(Input.fromString(original), Input.fromString(swapped)).getDiff();
         assertThat(diff.hasDifferences()).as(diff.toString()).isFalse();
     }
 
@@ -55,7 +47,7 @@ class XmlComparatorFeatures {
                 "<templateId root=\"2.16.840.1.113883.10.20.22.1.2\" extension=\"2015-08-01\"/>\n" +
                 "</root>";
 
-        Diff diff = ccdaDiff.compare(Input.fromString(original), Input.fromString(swapped));
+        Diff diff = CcdaDiff.of(Input.fromString(original), Input.fromString(swapped)).getDiff();
         assertThat(diff.hasDifferences()).as(diff.toString()).isFalse();
     }
 
@@ -79,7 +71,7 @@ class XmlComparatorFeatures {
                 "<postalCode>97867</postalCode>\n" +
                 "</addr>";
 
-        Diff diff = ccdaDiff.compare(Input.fromString(original), Input.fromString(swapped));
+        Diff diff = CcdaDiff.of(Input.fromString(original), Input.fromString(swapped)).getDiff();
         assertThat(diff.hasDifferences()).as(diff.toString()).isFalse();
     }
 
@@ -127,7 +119,7 @@ class XmlComparatorFeatures {
                         "    </component>\n" +
                         "</structuredBody>";
 
-        Diff diff = ccdaDiff.compare(Input.fromString(original), Input.fromString(swapped));
+        Diff diff = CcdaDiff.of(Input.fromString(original), Input.fromString(swapped)).getDiff();
         assertThat(diff.hasDifferences()).as(diff.toString()).isFalse();
     }
 
@@ -148,7 +140,7 @@ class XmlComparatorFeatures {
                 "    </section>\n" +
                 "</parent>";
 
-        Diff diff = ccdaDiff.compare(Input.fromString(original), Input.fromString(swapped));
+        Diff diff = CcdaDiff.of(Input.fromString(original), Input.fromString(swapped)).getDiff();
         assertThat(diff.hasDifferences()).as(diff.toString()).isFalse();
     }
 }
