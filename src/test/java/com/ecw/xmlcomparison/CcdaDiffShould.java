@@ -143,4 +143,69 @@ class CcdaDiffShould {
         Diff diff = CcdaDiff.of(Input.fromString(original), Input.fromString(swapped)).getDiff();
         assertThat(diff.hasDifferences()).as(diff.toString()).isFalse();
     }
+
+    @Test
+    void documents_considered_identical_with_different_order_of_sections_in_full_context() {
+        //language=XML
+        String original =
+                "<ClinicalDocument>\n" +
+                        "    <component>\n" +
+                        "        " +
+                        "<structuredBody>\n" +
+                        "            " +
+                        "<component>\n" +
+                        "                <section>\n" +
+                        "                    <!-- *** Allergies and Intolerances Section (entries required) (V3) *** -->\n" +
+                        "                    <templateId root=\"2.16.840.1.113883.10.20.22.2.6.1\" extension=\"2015-08-01\"/>\n" +
+                        "                    <templateId root=\"2.16.840.1.113883.10.20.22.2.6.1\"/>\n" +
+                        "                    <placeholder/>\n" +
+                        "                </section>\n" +
+                        "            " +
+                        "</component>\n" +
+                        "            " +
+                        "<component>\n" +
+                        "                <section>\n" +
+                        "                    <!-- *** Encounters section (entries required) (V3) *** -->\n" +
+                        "                    <templateId root=\"2.16.840.1.113883.10.20.22.2.22.1\" extension=\"2015-08-01\"/>\n" +
+                        "                    <templateId root=\"2.16.840.1.113883.10.20.22.2.22.1\"/>\n" +
+                        "                </section>\n" +
+                        "            " +
+                        "</component>\n" +
+                        "        " +
+                        "</structuredBody>\n" +
+                        "    </component>\n" +
+                        "</ClinicalDocument>\n";
+
+        //language=XML
+        String swapped =
+                "<ClinicalDocument>\n" +
+                        "    <component>\n" +
+                        "        " +
+                        "<structuredBody>\n" +
+                        "            " +
+                        "<component>\n" +
+                        "                <section>\n" +
+                        "                    <!-- *** Encounters section (entries required) (V3) *** -->\n" +
+                        "                    <templateId root=\"2.16.840.1.113883.10.20.22.2.22.1\" extension=\"2015-08-01\"/>\n" +
+                        "                    <templateId root=\"2.16.840.1.113883.10.20.22.2.22.1\"/>\n" +
+                        "                </section>\n" +
+                        "            " +
+                        "</component>\n" +
+                        "            <component>\n" +
+                        "                <section>\n" +
+                        "                    <!-- *** Allergies and Intolerances Section (entries required) (V3) *** -->\n" +
+                        "                    <templateId root=\"2.16.840.1.113883.10.20.22.2.6.1\" extension=\"2015-08-01\"/>\n" +
+                        "                    <templateId root=\"2.16.840.1.113883.10.20.22.2.6.1\"/>\n" +
+                        "                    <placeholder/>\n" +
+                        "                </section>\n" +
+                        "            </component>\n" +
+                        "        " +
+                        "</structuredBody>\n" +
+                        "    </component>\n" +
+                        "</ClinicalDocument>";
+
+        Diff diff = CcdaDiff.of(Input.fromString(original), Input.fromString(swapped)).getDiff();
+        assertThat(diff.hasDifferences()).as(diff.toString()).isFalse();
+    }
+
 }

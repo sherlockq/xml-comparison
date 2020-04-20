@@ -48,4 +48,8 @@ public class CcdaDiff {
             System.out.println(difference.toString());
         }
     }
+
+    public boolean hasDifferences() {
+        return diff.hasDifferences();
+    }
 }
